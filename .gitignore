@@ -1,0 +1,64 @@
+# .NET Core / .NET Standard
+*.dll
+*.exe
+*.pdb
+*.dll.config
+*.exe.config
+*.deps.json
+*.runtimeconfig.json
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+[Oo]bj/
+[Bb]in/
+
+# Visual Studio files
+.vs/
+*.vscode/
+*.sln
+*.suo
+*.user
+*.userprefs
+*.proj
+*.xproj
+*.swp
+*.sln.docstates
+
+# NuGet
+packages/
+*.nupkg
+*.paket.*
+*.paket.lock
+paket-files/
+
+# Test Results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+# StyleCop
+StyleCopReport.xml
+
+# Resharper
+_ReSharper*/
+*.resharper
+*.DotSettings.user
+
+# Others
+[Dd]ebugPS/
+[Rr]eleasePS/
+*.dbmdl
+*.dbproj.schemaview
+*.jfm
+*.pfx
+*.publishsettings
+node_modules/
+obj/
+bin/
+
+appsettings.json
+obj/Debug/net8.0/GLogger.pdb
