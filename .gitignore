@@ -60,5 +60,5 @@ node_modules/
 obj/
 bin/
 
-appsettings.json
+appsettings.Development.json
 obj/Debug/net8.0/GLogger.pdb
