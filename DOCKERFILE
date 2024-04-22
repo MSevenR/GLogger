@@ -1,0 +1,17 @@
+# Use the official Microsoft .NET Core runtime base image
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
+
+# Set the working directory in the image to /app
+WORKDIR /app
+
+# Copy the output of the dotnet publish command (which should be run in your CI/CD pipeline before this step) into the /app directory
+COPY ./publish .
+
+# Set the environment variable for the ASP.NET Core URLs to listen on port 80
+ENV ASPNETCORE_URLS=https://mdodds.localhost:443
+
+# Expose port 80 for the application
+EXPOSE 80
+
+# Run the application
+ENTRYPOINT ["dotnet", "GLogger.dll"]

@@ -52,32 +52,18 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
+app.MapPost("/games/fromname", (string gameName, [FromServices] GameController gameController) =>
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
+    return gameController.GetGamesFromName(gameName); 
 })
-.WithName("GetWeatherForecast")
+.WithName("FindGamesFromName")
 .WithOpenApi();
 
-app.MapPost("/games/gamesummary", (string gameName, [FromServices] GameController gameController) =>
+app.MapPost("/games/fromid", (int gameId, [FromServices] GameController gameController) =>
 {
-    var gameList = gameController.GameSummarySearchByName(gameName, true);
-    return gameList;
+    return gameController.GetGame(gameId); 
 })
-.WithName("FindGameSummary")
+.WithName("FindGameFromId")
 .WithOpenApi();
 
 app.Run();

@@ -1,0 +1,1 @@
+public record BaseRecord(int id);

@@ -61,4 +61,3 @@ obj/
 bin/
 
 appsettings.Development.json
-obj/Debug/net8.0/GLogger.pdb

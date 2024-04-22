@@ -11,7 +11,7 @@ namespace GLogger.Api.IgdbApi
     {
         private readonly HttpClient _httpClient;
         private readonly TwitchApiClient _twitchClient;
-        private readonly IgdbConfig _config;
+        public readonly IgdbConfig Config;
         private AccessToken? _accessToken { get; set; } = null;
 
         public IgdbClient(TwitchApiClient twitchClient, IgdbConfig config)
@@ -29,7 +29,7 @@ namespace GLogger.Api.IgdbApi
             _httpClient.DefaultRequestHeaders.Add("Connection", "keep-alive");
             
             _twitchClient = twitchClient;
-            _config = config;
+            Config = config;
         }
 
         private async Task<AccessToken> GetAccessToken()
@@ -51,7 +51,11 @@ namespace GLogger.Api.IgdbApi
             {
                 webResponse = new BrotliStream(webResponse, CompressionMode.Decompress);
             }
-            else
+            else if (response.Content.Headers.ContentEncoding.Contains("zstd"))
+            {
+                webResponse = new ZstdSharp.DecompressionStream(webResponse);
+            }
+            else if (response.Content.Headers.ContentEncoding.Contains("gzip"))
             {
                 webResponse = new GZipStream(webResponse, CompressionMode.Decompress);
             }
@@ -63,7 +67,7 @@ namespace GLogger.Api.IgdbApi
         public async Task<IApiData<T>> PostEndpointAsync<T>(string endpoint, string data)
         {
             var content = new StringContent(data.Replace("\\", ""), Encoding.UTF8, "text/plain");
-            var url = $"{ _config.Value.BaseUrl }{ endpoint }";
+            var url = $"{ Config.Value.BaseUrl }{ endpoint }";
 
             var accessToken = await GetAccessToken();
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken.access_token);
